@@ -1,0 +1,61 @@
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = 'http://repo.gradle.org/gradle/libs-releases-local'
+    }
+
+    maven {
+        url = 'http://repo.maven.apache.org/maven2'
+    }
+}
+
+dependencies {
+    compile 'org.cyclonedx:cyclonedx-core-java:1.1.2'
+    compile 'commons-codec:commons-codec:1.11'
+    compile 'commons-io:commons-io:2.6'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from(sourceSets.main.allJava)
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from(javadoc.destinationDir)
+}
+
+group = 'org.cyclonedx'
+version = '1.0.0-SNAPSHOT'
+description = 'CycloneDX'
+sourceCompatibility = '1.11'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            artifact(sourcesJar)
+            artifact(javadocJar)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+gradlePlugin {
+    plugins {
+        simplePlugin {
+            id = 'org.cyclonedx.gradle.bom'
+            implementationClass = 'org.cyclonedx.gradle.CycloneDxPlugin'
+        }
+    }
+}

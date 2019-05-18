@@ -15,8 +15,29 @@ with tools such as [OWASP Dependency-Track](https://dependencytrack.org/) for th
 
 Gradle Usage
 -------------------
+First, build and publish this plugin to your local maven repository
+```gradle publishToLocalMaven```
 
-TODO
+Second, in the existing project's _settings.gradle_, ensure that the plugins are resolved from local maven
+```
+pluginManagement {
+  repositories {
+      mavenLocal()
+  }
+}
+```
+
+Third, in the existing project's _build.gradle_, ensure that the plugin is applied
+```
+plugins { 
+    id 'org.cyclonedx.gradle.bom' version "1.0.0-SNAPSHOT"
+}
+```
+
+Fourth, in the existing project's directory, call the appropriate task (in development)
+```
+gradle cyclonedxBom
+```
 
 
 Copyright & License
