@@ -16,7 +16,9 @@ with tools such as [OWASP Dependency-Track](https://dependencytrack.org/) for th
 Gradle Usage
 -------------------
 First, build and publish this plugin to your local maven repository
-```gradle publishToLocalMaven```
+```
+gradle publishToLocalMaven
+```
 
 Second, in the existing project's _settings.gradle_, ensure that the plugins are resolved from local maven
 ```
